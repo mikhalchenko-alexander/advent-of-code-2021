@@ -3,6 +3,7 @@ input = File
 
 horizontal = 0
 depth = 0
+aim = 0
 
 input.each do |line|
   command = line.split(' ')
@@ -10,10 +11,11 @@ input.each do |line|
   case command[0]
   when 'forward'
     horizontal += value
+    depth += aim * value
   when 'down'
-    depth += value
+    aim += value
   else # up
-    depth -= value
+    aim -= value
   end
 end
 
