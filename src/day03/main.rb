@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
+def most_common_bit(numbers, index)
+  half_numbers_size = numbers.length / 2
+  one_count = numbers.map { |n| n[index] }
+                     .count { |n| n == '1' }
+  one_count > half_numbers_size ? '1' : '0'
+end
+
 input = File
         .readlines('input', chomp: true)
+        .map { |line| line.split('') }
 
-half_input_size = input.length / 2
-
-one_bit_count = {}
-one_bit_count.default = 0
-
-input.each { |line| line.split('').each_with_index { |c, i| one_bit_count[i] += c.to_i } }
-
-gamma = one_bit_count
-        .sort_by { |entry| entry[0] }
-        .map { |entry| entry[1] > half_input_size ? '1' : '0' }
+gamma = (0..input[0].length - 1)
+        .map { |i| most_common_bit(input, i) }
         .join
         .to_i(2)
 
