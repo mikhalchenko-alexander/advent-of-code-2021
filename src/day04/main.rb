@@ -8,12 +8,11 @@ if __FILE__ == $PROGRAM_NAME
   numbers = input_parts[0].split(',').map(&:to_i)
 
   boards = input_parts.drop(1).map { |board_str| Board.new(board_str) }
-  found = nil
   numbers.each do |number|
     boards.each { |board| board.mark(number) }
-    found = boards.find(&:won)
-    break unless found.nil?
+    boards = boards.filter { !_1.won } if boards.length > 1
+    break unless boards.length > 1 || !boards[0].won
   end
 
-  puts found.score
+  puts boards[0].score
 end
